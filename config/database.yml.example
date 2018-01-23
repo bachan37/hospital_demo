@@ -1,0 +1,8 @@
+development:
+  adapter: mysql2
+  encoding: utf8
+  host: localhost
+  database: hospital_dev
+  pool: 5
+  username: root
+  password: mindfire
