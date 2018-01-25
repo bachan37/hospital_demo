@@ -8,9 +8,11 @@ class User < ActiveRecord::Base
 
   has_many :doctor_appointments, class_name: 'Appointment', foreign_key: "patient_id" do
     def future
+      where("appointment_date > current_time", current_time: Time.now)
     end
 
     def past
+      where("appointment_date < current_time", current_time: Time.now)
     end
   end
   has_many :patient_appointments, class_name: 'Appointment', foreign_key: "doctor_id" do
@@ -28,17 +30,25 @@ class User < ActiveRecord::Base
 
   has_many :notes
 
+  def add_appointment_note(appointment, note)
+    self.notes.create(appointment: appointment, description: note)
+  end
+
   def future_doctor_appointments
-    self.
+    #self.
   end
 
   def future_patient_appointments
     self.patient_appointments.where("appointment_date > current_time", current_time: Time.now)
   end
 
-  def appointments
-    result = self.patient_appointments if self.doctor?
-    result = self.doctor_appointments if self.patient?
+  def future_appointments
+    result = self.patient_appointments.future if self.doctor?
+    result = self.doctor_appointments.future.includes(:doctor) if self.patient?
     result
+  end
+
+  def name
+    self.email.split('@').first
   end
 end

@@ -1,0 +1,33 @@
+%div
+  My Appointments
+- if @appointments.blank?
+  No appointments found.
+
+  
+%table
+  %thead
+    %tr
+      %td
+        SL
+      %td
+        Date
+      %td
+        Doctor
+      %td
+        Status
+      %td
+        Actions
+  %tbody
+    - @appointments.each do |appointment|
+      %tr
+        %td
+          = appointment.id
+        %td
+          = appointment.appointment_date
+        %td
+          = appointment.doctor.email
+        %td
+          = appointment.status
+        %td
+          some actions
+

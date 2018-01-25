@@ -1,0 +1,32 @@
+%h3
+  Appointment Details
+
+%table{width: "50%"}
+  %tr
+    %td Date
+    %td
+      = @appointment.appointment_date
+  %tr
+    %td Status
+    %td
+      = @appointment.status
+  %tr
+    %td Doctor
+    %td
+      = @appointment.doctor.name
+  %tr
+    %td Patient
+    %td
+      = @appointment.patient.name
+  %tr
+    %td Notes
+    %td
+      %table{width: "100%"}
+
+        - @appointment.notes.each do |note|
+          %tr
+            %td
+              = note.description
+              %br
+              = "- #{note.user.name} on #{note.created_at}"
+            
